@@ -1,0 +1,53 @@
+/*
+    Parliament (parliament-seats) is a tool for visualizing and calculating
+    the distribution of seats in a parliamentary system.
+
+    Copyright (C) 2025 @disfordave
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { MajorityThreshold } from "./majority";
+import { Party } from "./party";
+import { SortByState } from "./zustand";
+import type { Locale, defaultLocale } from "@/i18n/i18n";
+
+export interface Parliament {
+  // In English, and also what links use to pick the sample
+  name: string;
+  // In each of the other languages
+  localizedNames: Record<Exclude<Locale, typeof defaultLocale>, string>;
+  parties: Party[];
+  updateDate: string;
+}
+
+export type ParliamentInfo = Pick<Parliament, "name" | "updateDate">;
+
+export interface ParliamentData extends ParliamentInfo {
+  parties: Party[];
+  selectedParties: Party[];
+  // Left out when the importer should keep their own settings
+  majorityThreshold?: MajorityThreshold;
+  allowTieBreaker?: boolean;
+  sortBy?: SortByState["sortBy"];
+  locale?: string;
+}
+
+// Which settings an export carries along with the parties
+export interface IncludeOptions {
+  selectedParties: boolean;
+  majorityThreshold: boolean;
+  sortBy: boolean;
+  locale: boolean;
+}

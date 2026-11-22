@@ -1,0 +1,61 @@
+<!doctype html>
+<html lang="en">
+  <head>
+    <meta charset="UTF-8" />
+    <meta
+      name="viewport"
+      content="width=device-width, initial-scale=1.0, viewport-fit=cover"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: light)"
+      content="#ffffff"
+    />
+    <meta
+      name="theme-color"
+      media="(prefers-color-scheme: dark)"
+      content="#18181b"
+    />
+    <link rel="icon" type="image/png" href="/favicon-96x96.png" sizes="96x96" />
+    <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
+    <link rel="shortcut icon" href="/favicon.ico" />
+    <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
+    <meta name="apple-mobile-web-app-title" content="Parliament" />
+    <meta name="application-name" content="Parliament Seats" />
+    <link rel="manifest" href="/site.webmanifest" />
+    <!-- One file holds every weight of the Latin letters, so the text can
+      start in the right font instead of swapping in later -->
+    <link
+      rel="preload"
+      href="/node_modules/@fontsource-variable/ibm-plex-sans/files/ibm-plex-sans-latin-wght-normal.woff2"
+      as="font"
+      type="font/woff2"
+      crossorigin
+    />
+
+    <!-- The title, description, social cards and links to the other
+      languages, filled in for each language from src/seo/pages.ts -->
+    <!-- seo:head -->
+    <script>
+      (function () {
+        try {
+          var params = new URLSearchParams(location.search);
+          // Embeds use ?theme=light|dark|auto, since the host page sets the look
+          var t = params.has("embed")
+            ? params.get("theme") || "light"
+            : localStorage.getItem("theme");
+          var d =
+            t === "dark" ||
+            (t !== "light" &&
+              window.matchMedia("(prefers-color-scheme: dark)").matches);
+          document.documentElement.classList.toggle("dark", d);
+        } catch (e) {}
+      })();
+    </script>
+  </head>
+  <body>
+    <div id="root"></div>
+    <!-- seo:noscript -->
+    <script type="module" src="/src/main.tsx"></script>
+  </body>
+</html>

@@ -1,0 +1,54 @@
+/*
+    Parliament (parliament-seats) is a tool for visualizing and calculating
+    the distribution of seats in a parliamentary system.
+
+    Copyright (C) 2025 @disfordave
+
+    This program is free software: you can redistribute it and/or modify
+    it under the terms of the GNU Affero General Public License as published
+    by the Free Software Foundation, either version 3 of the License, or
+    (at your option) any later version.
+
+    This program is distributed in the hope that it will be useful,
+    but WITHOUT ANY WARRANTY; without even the implied warranty of
+    MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+    GNU Affero General Public License for more details.
+
+    You should have received a copy of the GNU Affero General Public License
+    along with this program.  If not, see <https://www.gnu.org/licenses/>.
+*/
+
+import { neutralColor } from "@/components/colors";
+import { useParties, useI18n } from "@/lib/zustandStore";
+import { PlusIcon } from "@heroicons/react/24/outline";
+
+export default function AddNewPartyButton() {
+  const { parties, setParties } = useParties();
+  const { i } = useI18n();
+  return (
+    <>
+      <button
+        onClick={() => {
+          setParties([
+            ...parties,
+            {
+              id: crypto.randomUUID(),
+              name: "",
+              shortName: "",
+              seats: 0,
+              colour: neutralColor,
+              position: 0,
+              isIndependent: false,
+            },
+          ]);
+        }}
+        className="m-4 aspect-square w-1/3 rounded-full border-2 border-transparent bg-zinc-200 p-2 transition-colors hover:bg-zinc-300 dark:bg-zinc-700 dark:hover:bg-zinc-600"
+        type="button"
+        title={i("party.add")}
+        aria-label={i("party.add")}
+      >
+        <PlusIcon className="m-auto size-2/3 stroke-2 text-zinc-950 dark:text-white" />
+      </button>
+    </>
+  );
+}
