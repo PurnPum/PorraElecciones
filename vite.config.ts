@@ -54,6 +54,7 @@ function localizedPages(): Plugin {
 
 // https://vite.dev/config/
 export default defineConfig({
+  base: "/PorraElecciones/",
   plugins: [react(), localizedPages()],
   resolve: {
     alias: {
