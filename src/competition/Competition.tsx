@@ -30,7 +30,7 @@ const fieldStyle =
 const submissionErrors = new Map([
   [
     "INVALID_CODE",
-    "El código no es válido. Comprueba el código que te dio la organización.",
+    "El código no es válido. Comprueba el código proporcionado.",
   ],
   ["CODE_USED", "Este código ya se ha utilizado para enviar una porra."],
   ["INVALID_SEATS", "Revisa el reparto de escaños e inténtalo de nuevo."],
@@ -59,7 +59,7 @@ function PredictionForm({
     const trimmedCode = code.trim();
     if (!/^[a-f0-9]{5,6}$/i.test(trimmedCode)) {
       setError(
-        "Introduce el código de 5 o 6 caracteres hexadecimales que te dio la organización.",
+        "Introduce el código de 5 o 6 caracteres hexadecimales que recibiste.",
       );
       return;
     }
@@ -103,7 +103,7 @@ function PredictionForm({
               <label className="block min-w-0 flex-1 font-medium">
                 Código de participación
                 <input
-                  type="password"
+                  type="text"
                   value={code}
                   onChange={(event) => setCode(event.target.value)}
                   autoCapitalize="none"
