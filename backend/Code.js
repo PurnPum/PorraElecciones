@@ -102,6 +102,13 @@ const PARTIES = [
     colour: "#EC8953",
     position: -50,
   },
+  {
+    id: "es-salf",
+    name: "Se Acabó la Fiesta",
+    shortName: "SALF",
+    colour: "#475569",
+    position: 100,
+  },
 ];
 
 function doGet(e) {
