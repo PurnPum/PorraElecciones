@@ -18,7 +18,6 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useI18n } from "@/lib/zustandStore";
 import {
   ComputerDesktopIcon,
   MoonIcon,
@@ -27,8 +26,6 @@ import {
 import { ThemeToggle } from "themeflip";
 
 export default function ThemeButton() {
-  const { i } = useI18n();
-
   return (
     <>
       <ThemeToggle
@@ -53,15 +50,15 @@ export default function ThemeButton() {
     text-white dark:text-zinc-950
   "
         system={{
-          label: i("appearance.auto"),
+          label: "Automático",
           icon: <ComputerDesktopIcon className="size-5" />,
         }}
         light={{
-          label: i("appearance.light"),
+          label: "Claro",
           icon: <SunIcon className="size-5" />,
         }}
         dark={{
-          label: i("appearance.dark"),
+          label: "Oscuro",
           icon: <MoonIcon className="size-5" />,
         }}
       />

@@ -18,11 +18,9 @@
     along with this program.  If not, see <https://www.gnu.org/licenses/>.
 */
 
-import { useI18n } from "@/lib/zustandStore";
 import { Logo } from "./icons/Logo";
 
 export default function Header() {
-  const { i } = useI18n();
   return (
     <>
       <header
@@ -33,8 +31,10 @@ export default function Header() {
         <div className={"flex items-center gap-2"}>
           <Logo className="size-12 shrink-0" />
           <div className="flex flex-col justify-start">
-            <h1 className="text-2xl font-bold">Parliament Seats</h1>
-            <p className="text-sm leading-4 opacity-75">{i("subtitle")}</p>
+            <h1 className="text-2xl font-bold">PorraElecciones</h1>
+            <p className="text-sm leading-4 opacity-75">
+              Congreso de los Diputados
+            </p>
           </div>
         </div>
       </header>

@@ -19,7 +19,6 @@
 */
 
 import { pieChartDarkColor, pieChartLightColor } from "@/components/colors";
-import { useI18n } from "@/lib/zustandStore";
 import {
   IsEditModeState,
   MajorityThresholdState,
@@ -46,7 +45,6 @@ interface PieDatum {
 const emptyId = "empty";
 
 function PartyTooltip({ datum }: PieTooltipProps<PieDatum>) {
-  const { i } = useI18n();
   const { party } = datum.data;
   if (!party) return null;
 
@@ -58,7 +56,7 @@ function PartyTooltip({ datum }: PieTooltipProps<PieDatum>) {
       ></span>
       <span>{getPartyLabel(party)}</span>
       <span className="font-semibold tabular-nums">
-        {pluralize(party.seats, i("header.seat"), i("header.seats"))}
+        {pluralize(party.seats, "escaño", "escaños")}
       </span>
     </div>
   );
@@ -98,7 +96,7 @@ export default function PieChart({
     <>
       <ResponsivePie<PieDatum>
         data={[
-          ...selectedParties
+          ...[...selectedParties]
             .sort((a, b) => sort(a, b, isEditMode, sortBy))
             .map((party) => ({
               id: party.id,

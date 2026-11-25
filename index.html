@@ -1,7 +1,24 @@
 <!doctype html>
-<html lang="en">
+<html lang="es">
   <head>
     <meta charset="UTF-8" />
+    <title>PorraElecciones</title>
+    <meta
+      name="description"
+      content="Pronostica el reparto de los 350 escaños del Congreso de los Diputados y compara las porras cuando se cierre el plazo."
+    />
+    <link rel="canonical" href="https://purnpum.github.io/PorraElecciones/" />
+    <meta property="og:type" content="website" />
+    <meta property="og:locale" content="es_ES" />
+    <meta property="og:title" content="PorraElecciones" />
+    <meta
+      property="og:description"
+      content="Pronostica el reparto de los 350 escaños del Congreso de los Diputados."
+    />
+    <meta
+      property="og:url"
+      content="https://purnpum.github.io/PorraElecciones/"
+    />
     <meta
       name="viewport"
       content="width=device-width, initial-scale=1.0, viewport-fit=cover"
@@ -20,8 +37,8 @@
     <link rel="icon" type="image/svg+xml" href="/favicon.svg" />
     <link rel="shortcut icon" href="/favicon.ico" />
     <link rel="apple-touch-icon" sizes="180x180" href="/apple-touch-icon.png" />
-    <meta name="apple-mobile-web-app-title" content="Parliament" />
-    <meta name="application-name" content="Parliament Seats" />
+    <meta name="apple-mobile-web-app-title" content="PorraElecciones" />
+    <meta name="application-name" content="PorraElecciones" />
     <link rel="manifest" href="/site.webmanifest" />
     <!-- One file holds every weight of the Latin letters, so the text can
       start in the right font instead of swapping in later -->
@@ -33,17 +50,10 @@
       crossorigin
     />
 
-    <!-- The title, description, social cards and links to the other
-      languages, filled in for each language from src/seo/pages.ts -->
-    <!-- seo:head -->
     <script>
       (function () {
         try {
-          var params = new URLSearchParams(location.search);
-          // Embeds use ?theme=light|dark|auto, since the host page sets the look
-          var t = params.has("embed")
-            ? params.get("theme") || "light"
-            : localStorage.getItem("theme");
+          var t = localStorage.getItem("theme");
           var d =
             t === "dark" ||
             (t !== "light" &&
@@ -55,7 +65,7 @@
   </head>
   <body>
     <div id="root"></div>
-    <!-- seo:noscript -->
+    <noscript>Activa JavaScript para participar en PorraElecciones.</noscript>
     <script type="module" src="/src/main.tsx"></script>
   </body>
 </html>

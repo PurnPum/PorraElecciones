@@ -1,304 +1,32 @@
-# 🏛️ Parliament Seats
+# PorraElecciones
 
-![Parliament Seats Mockup](docs/images/parliament-seats-mockup.jpg)
+Porra privada para pronosticar el reparto de los 350 escaños del Congreso de los Diputados. Cada participante usa un código de un solo uso. Al cierre se publican los alias y sus porras. Cualquier visitante puede introducir un resultado hipotético y consultar la clasificación, ordenada por la suma de diferencias absolutas de escaños.
 
-[![CI](https://github.com/disfordave/parliament-seats/actions/workflows/ci.yml/badge.svg)](https://github.com/disfordave/parliament-seats/actions/workflows/ci.yml)
-[![Deploy to Pages](https://github.com/disfordave/parliament-seats/actions/workflows/deploy.yml/badge.svg)](https://github.com/disfordave/parliament-seats/actions/workflows/deploy.yml)
-![Licence](https://img.shields.io/badge/Licence-AGPL--3.0--or--later-blue)
+## Configuración
 
-🌐 **Live Demo:** [https://parl.hsw.is](https://parl.hsw.is)
+Sigue la [guía de Apps Script y Google Sheets](backend/README.md) para preparar la hoja privada, confirmar las candidaturas, fijar el cierre y generar los códigos de participación. El frontend recibe el plazo y las candidaturas desde la API.
 
-Parliament Seats is an interactive **coalition simulator and parliamentary seat visualiser** inspired by election-night graphics used in television broadcasts.
+Para el desarrollo local, instala las dependencias con `npm ci` y crea un archivo `.env.local` con la URL pública de tu implementación.
 
-Many election visualisations show seat distributions for a single election. Parliament Seats generalises that idea into a reusable tool where users can explore **different parliamentary systems, party configurations, and coalition scenarios** across many parliaments.
-
-The application allows users to experiment with political party configurations and instantly see how seat distributions translate into potential governing coalitions.
-
----
-
-# Why this project exists
-
-Election broadcasts often include beautiful interactive graphics showing how seats are distributed in a parliament and which coalitions might form a government.
-
-However, these tools are usually tied to **a specific election and dataset**.
-
-Parliament Seats was created to make that experience reusable:
-
-- explore different parliamentary systems
-- test hypothetical election outcomes
-- experiment with coalition combinations
-- visualise how seat distributions affect governing majorities
-
----
-
-# Features
-
-## Coalition simulation
-
-Select political parties and instantly see whether they reach a governing majority.
-
-Seat totals and majority thresholds update in real time as parties are selected.
-
----
-
-## Tie-breaker logic
-
-Supports parliamentary systems where a **tie-breaking vote** may determine the outcome (e.g. the US Senate model).
-
-Tie-breaking is treated as a **vote outcome rule**, not as an additional seat.
-
----
-
-## Sample parliaments
-
-Includes sample parliamentary structures such as:
-
-- European Union
-- Germany (Bundestag)
-- Austria (Nationalrat)
-- Netherlands (Tweede Kamer)
-- Belgium (Kamer / Chambre)
-- United Kingdom (House of Commons)
-- South Africa (National Assembly)
-- Australia (Senate and House)
-- Canada (House of Commons / Chambre des communes)
-- France (Assemblée nationale)
-- Malta (House of Representatives)
-- New Zealand (House of Representatives)
-- Quebec (Assemblée nationale)
-- Spain (Congreso de los Diputados)
-- Turkey (Türkiye Büyük Millet Meclisi)
-- United States (Senate)
-
-Users can also create custom parliament configurations.
-
----
-
-## Political spectrum visualisation
-
-Parties can be sorted and displayed according to their **political positioning** (left → centre → right), allowing users to visualise ideological balance within coalitions.
-
----
-
-## Interactive seat visualisation
-
-Seat distributions are displayed using:
-
-- horizontal bar charts for seat counts
-- pie charts for seat distribution
-- majority threshold indicators
-
-Hovering over (or tapping) the half pie shows each party's short name and seat count.
-
-Visualisations update instantly when party data changes.
-
----
-
-## Seats from votes
-
-In edit mode, each party can be given a vote count or a vote share, and the seats are calculated from them with the **D'Hondt**, **Sainte-Laguë**, or **largest remainder** (Hare) method.
-
-Set the total number of seats and, optionally, an **electoral threshold**: parties below that percentage of the votes get no seats, and their seats go to the parties that pass it. As in Germany, the threshold counts all votes, so a party with 4.98% misses a 5% threshold even when the parties that won no seats are not listed. Vote shares are out of 100, and for vote counts the total votes can be set to include the parties that are not listed. Parties can be marked **exempt from the threshold**, like national minority parties such as the SSW in Germany.
-
----
-
-## Scenario import / export
-
-Parliament configurations can be saved and shared using **JSON import/export**, either as a `.json` file or as text copied to the clipboard.
-
-This allows users to:
-
-- store custom scenarios
-- recreate hypothetical elections
-- share configurations with others
-- paste a shared configuration straight from a message
-
-Scenarios can also be shared as a **link**. The data is compressed into the part of the URL after `#`, so it never reaches the server.
-
----
-
-## Images and embedding
-
-The current coalition can be downloaded or copied as a **PNG image** in square (1:1), portrait (4:5, the tallest Instagram feed post), vertical (9:16, for stories and reels), or wide (16:9) format. Images are drawn in the browser.
-
-**Copy embed code** gives an `<iframe>` for showing the chart on another website. Readers can select parties in it, start over with **Select all** or **Deselect all**, go back to the embedded coalition with **Reset**, and open it in the full app. The included script resizes the iframe to fit; sites that strip scripts show it at a fixed height.
-
-Embeds can also be built by hand:
-
-- `?embed` shows only the chart
-- `?embed&parliament=Germany` shows a sample parliament (`?country=` also works)
-- `&theme=dark` or `&theme=auto` changes the default light theme
-
----
-
-## Multilingual interface
-
-The application currently supports:
-
-- English
-- German (Deutsch)
-- French (Français)
-- Dutch (Nederlands)
-- Turkish (Türkçe)
-- Spanish (Español)
-
-Each language has its own page, such as `/de/` or `/es/`, with English at the root. These pages carry their own title, description, social cards and `hreflang` links, so search engines can list each language, and the build adds them all to `sitemap.xml`. The page and social card text for each language lives in the `seo` section of its file in `src/i18n/`.
-
-The root page uses the language chosen before, or else the browser's language. The `?lang=` URL parameter also changes the language. Share links and embeds point at the root page, so they open in the reader's language unless the shared data includes one.
-
----
-
-## Responsive design
-
-Parliament Seats works across desktop, tablet, and mobile devices.
-
-The visualisation layout adapts automatically to different screen sizes.
-
----
-
-# Getting started
-
-## Prerequisites
-
-- Node.js 20+
-- npm or yarn
-
----
-
-## Installation
-
-Clone the repository:
-
-```bash
-git clone https://github.com/disfordave/parliament-seats.git
-cd parliament-seats
+```dotenv
+VITE_COMPETITION_API_URL=https://script.google.com/macros/s/ID_DE_IMPLEMENTACION/exec
 ```
 
-Install dependencies:
+Inicia Vite con `npm run dev` y abre la ruta `/PorraElecciones/`. Si falta la URL, el sitio muestra que la porra aún no está disponible.
 
-```bash
-npm install
+## GitHub Pages
+
+En **Settings → Pages → Build and deployment → Source**, selecciona **GitHub Actions**. En **Settings → Secrets and variables → Actions → Variables**, crea la variable de repositorio `VITE_COMPETITION_API_URL` con la URL que termina en `/exec`. Cuando los cambios estén en `main`, el flujo **Deploy to Pages** genera el sitio bajo `/PorraElecciones/`. También puedes ejecutarlo desde **Actions → Deploy to Pages → Run workflow**. Después de cambiar la variable, vuelve a ejecutar el flujo.
+
+La URL de la API forma parte del sitio público. Mantén los códigos, sus hashes y los datos privados en los sistemas de la organización descritos en la guía.
+
+## Comprobaciones
+
+```sh
+npm run lint
+npm run format:check
+npm test -- --run
+npm run build
 ```
 
-Start the development server:
-
-```bash
-npm run dev
-```
-
-Open:
-
-```
-http://localhost:5173
-```
-
----
-
-# Available scripts
-
-| Command           | Description               |
-| ----------------- | ------------------------- |
-| `npm run dev`     | Start development server  |
-| `npm run build`   | Build for production      |
-| `npm run preview` | Preview production build  |
-| `npm run lint`    | Run ESLint                |
-| `npm run format`  | Format code with Prettier |
-| `npm run test`    | Run tests using Vitest    |
-
----
-
-# Built with
-
-- **React** — UI framework
-- **TypeScript** — static typing
-- **Vite** — development server and build tool
-- **Zustand** — state management
-- **Tailwind CSS** — styling
-- **Nivo** — data visualisation
-- **Motion** — UI animations
-- **Vitest** — unit testing
-
----
-
-# How it works
-
-1. Select a sample parliament or create a custom one
-2. Add or modify political parties and seat counts
-3. Adjust ideological positions or party metadata
-4. Select parties to form potential coalitions
-5. Instantly see whether a governing majority is reached
-
----
-
-# Contributing
-
-Contributions are welcome.
-
-Possible areas for improvement include:
-
-- additional parliamentary systems
-- updating existing parliaments
-- visualisation improvements
-- accessibility enhancements
-- additional language support
-
-To contribute:
-
-```bash
-git checkout -b feature/your-feature-name
-git commit -m "Add feature"
-git push origin feature/your-feature-name
-```
-
-Then open a pull request.
-
-## Adding a sample parliament
-
-Samples live in [`src/data/parliaments.ts`](src/data/parliaments.ts). Please follow these rules so the list stays consistent.
-
-**What to add**
-
-- **Real parliaments that exist today.** No fictional, proposed or abolished ones.
-- **The current composition.** Use the seat numbers in force now, and set `updateDate` to the date they are from.
-- **The incoming composition, after an election.** Until the newly elected members take their seats, a chamber can have two samples: the outgoing composition and the incoming one, as in `United States (Senate, 2026)` and `United States (Senate, 2027)`.
-- **A historical composition**, such as a landmark election, only when it adds something the current one can't. Explain why in the pull request.
-- **A source.** Link where the seat numbers come from in the pull request. (Optional, but strongly encouraged.)
-
-**Naming**
-
-- **The place's name only, without the country it is part of.**
-  - ✅ `London`, `Wallonia`, `Quebec`, `Germany`
-  - ❌ `London, UK`, `Wallonia, Belgium`, `Quebec, Canada`, `Germany, Europe`
-- **A short chamber name for an upper house, or when adding more than one chamber** of the same parliament, as in `United States (Senate, 2027)`, or `Australia (House)` and `Australia (Senate)`. A lower or only chamber on its own needs no chamber name, as in `Germany`.
-- **A year for any composition other than the current one**, in the same brackets, after any chamber name. The current composition has no year, unless the chamber also has an incoming one.
-  - Outgoing and incoming: the year each one sits, as in `United States (Senate, 2026)` for the Senate in office now and `United States (Senate, 2027)` for the one elected in November 2026, which takes its seats in January 2027.
-  - Historical: the year it took its seats, as in `Germany (2021)` or `Australia (House, 2022)`.
-- **`name` is in English**, and links use it (`?parliament=Germany`), so avoid renaming a sample once it is published. When the new members take their seats, the incoming sample keeps its name, year included. The outgoing one stays only if it is worth keeping as a historical composition.
-- **`localizedNames` gives the name in every other language.** Translate the place and the chamber, and keep everything else in the brackets as in English, as in `Vereinigte Staaten (Senat, 2026)` or `Deutschland (2021)`. TypeScript reports any language that is missing.
-- **No flags or emoji.**
-
-**Parties**
-
-- **An `id` that starts with a short code for the sample**, like `us-democratic` or `au-senate-liberal`. Each `id` must be unique within its sample. A party keeps the same `id` in every composition of a chamber, as `us-democratic` does in both US Senate samples.
-- **A `position`** from -100 (left) to 100 (right).
-- **Members who sit with a party, such as independents who caucus with it, can be counted with that party.** Say so in `name`, as in `Democratic Party (including independents)`.
-
-**Checklist**
-
-1. Add the entry to [`src/data/parliaments.ts`](src/data/parliaments.ts). Copying an existing one is the easiest start.
-2. Run `npm run build` and `npm run test`.
-
-Optional, but strongly encouraged:
-
-- Add it to the [Sample parliaments](#sample-parliaments) list above, with the chamber's own name, as in `Germany (Bundestag)`. A chamber with more than one composition is listed once, without years.
-- Add it to `seo.parliaments` in [`src/i18n/`](src/i18n/), in the same style. Add it to every language file or to none, since a test checks that the lists are the same length.
-
----
-
-# Licence
-
-This project is licensed under the **GNU Affero General Public License v3.0 or later (AGPL-3.0-or-later)**.
-
-You are free to use and modify the project, but if you deploy it as a service, you must also share your modifications under the same licence.
-
-See the [LICENSE](LICENSE) file for details.
+Basado en [Parliament Seats](https://github.com/disfordave/parliament-seats) de disfordave. Distribuido bajo la [licencia AGPL-3.0](LICENSE).

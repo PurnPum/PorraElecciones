@@ -19,48 +19,17 @@
 */
 
 import "./App.css";
-import { useEffect } from "react";
-import Body from "@/components/Body";
-import Embed from "@/components/Embed";
 import Header from "@/components/Header";
 import Footer from "@/components/Footer";
-import LandscapeParliamentListBanner from "./components/ui/app/head/LandscapeParliamentListBanner";
-import { useUrlData } from "@/lib/useUrlData";
-import { useI18n } from "@/lib/zustandStore";
-
-// Other sites show only the chart, in an iframe pointing at ?embed
-const isEmbed = new URLSearchParams(window.location.search).has("embed");
+import Competition from "@/competition/Competition";
 
 function App() {
-  const { sharedParliament, isShareLinkInvalid } = useUrlData(isEmbed);
-  const { locale, i } = useI18n();
-
-  // Keeps the page's language and title in step with the chosen language
-  useEffect(() => {
-    document.documentElement.lang = locale;
-    document.title = i("seo.title");
-  }, [locale, i]);
-
-  if (isEmbed) {
-    return (
-      <Embed
-        sharedParliament={sharedParliament}
-        isShareLinkInvalid={isShareLinkInvalid}
-      />
-    );
-  }
-
   return (
     <div className="min-h-screen bg-white text-zinc-950 transition-colors duration-300 dark:bg-zinc-900 dark:text-white">
       <div className="mx-auto max-w-7xl pt-[calc(env(safe-area-inset-top)+1rem)] pr-[calc(env(safe-area-inset-right)+1rem)] pb-[calc(env(safe-area-inset-bottom)+1rem)] pl-[calc(env(safe-area-inset-left)+1rem)]">
         <Header />
-        <main className="grid grid-cols-1 gap-4 lg:grid-cols-[14.5fr_5.5fr]">
-          <div className="">
-            <Body />
-          </div>
-          <div className="hidden pt-4 lg:block">
-            <LandscapeParliamentListBanner />
-          </div>
+        <main className="mt-4">
+          <Competition />
         </main>
         <Footer />
       </div>
